@@ -32,7 +32,7 @@ Download `ForumCE-Connect-v1.0-macOS.dmg` from the latest ForumCE release.
 
 Open the DMG, then drag **ForumCE Connect** into your Applications folder.
 
-If macOS blocks the app the first time, right-click **ForumCE Connect**, choose **Open**, then confirm.
+If macOS blocks the app the first time, right-click **ForumCE Connect**, choose **Open**, then confirm. If that doesn't work, press the ? at the top-right of the pop-up window, navigate down to the privacy settings link and click it, scroll down to the bottom and press the "allow" button to open the app.
 
 ### 2. Install ForumCE on your calculator
 
