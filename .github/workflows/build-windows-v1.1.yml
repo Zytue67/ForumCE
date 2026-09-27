@@ -28,6 +28,8 @@ jobs:
         run: |
           $parts = Get-ChildItem ".windows-build\source.part*.b64" | Sort-Object Name
           $b64 = ($parts | ForEach-Object { Get-Content $_.FullName -Raw }) -join ""
+          $b64 = $b64 -replace '[^A-Za-z0-9+/=]', ''
+          Write-Host "Sanitized base64 length: $($b64.Length)"
           [IO.File]::WriteAllBytes("ForumCE-Connect-v1.1-CrossPlatform-Source.zip", [Convert]::FromBase64String($b64))
           $hash = (Get-FileHash "ForumCE-Connect-v1.1-CrossPlatform-Source.zip" -Algorithm SHA256).Hash.ToLower()
           Write-Host "Source SHA256: $hash"
