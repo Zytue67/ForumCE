@@ -1,0 +1,64 @@
+name: Build ForumCE Connect Windows v1.1
+
+on:
+  push:
+    branches:
+      - windows-support-v1.1
+    paths:
+      - '.windows-build/**'
+      - '.github/workflows/build-windows-v1.1.yml'
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: windows-latest
+
+    steps:
+      - name: Check out source
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+          architecture: 'x64'
+
+      - name: Reconstruct source archive
+        shell: pwsh
+        run: |
+          $parts = Get-ChildItem ".windows-build\source.part*.b64" | Sort-Object Name
+          $b64 = ($parts | ForEach-Object { Get-Content $_.FullName -Raw }) -join ""
+          [IO.File]::WriteAllBytes("ForumCE-Connect-v1.1-CrossPlatform-Source.zip", [Convert]::FromBase64String($b64))
+          $hash = (Get-FileHash "ForumCE-Connect-v1.1-CrossPlatform-Source.zip" -Algorithm SHA256).Hash.ToLower()
+          Write-Host "Source SHA256: $hash"
+          if ($hash -ne "7c26d3b9b38ba907bfafc9fd2fb6cea3c3c657a81f8a46c6a8ad05a8a66c40c6") {
+            throw "Source archive hash mismatch."
+          }
+          Expand-Archive -Path "ForumCE-Connect-v1.1-CrossPlatform-Source.zip" -DestinationPath "windows-src"
+
+      - name: Syntax and detection tests
+        shell: pwsh
+        working-directory: windows-src/ForumCE-Connect-v1.1-CrossPlatform
+        run: |
+          python -m py_compile app.py bridge_runtime.py device_utils.py
+          python -m pip install pyserial
+          python -c "import device_utils; print('device_utils import OK')"
+
+      - name: Build Windows executable
+        shell: pwsh
+        working-directory: windows-src/ForumCE-Connect-v1.1-CrossPlatform
+        run: |
+          .\build_windows.ps1
+
+      - name: Show executable hash
+        shell: pwsh
+        working-directory: windows-src/ForumCE-Connect-v1.1-CrossPlatform
+        run: |
+          Get-FileHash "dist\ForumCE-Connect-v1.1.0-Windows-x64.exe" -Algorithm SHA256
+
+      - name: Upload Windows build
+        uses: actions/upload-artifact@v4
+        with:
+          name: ForumCE-Connect-v1.1.0-Windows-x64
+          path: windows-src/ForumCE-Connect-v1.1-CrossPlatform/dist/ForumCE-Connect-v1.1.0-Windows-x64.exe
+          if-no-files-found: error
