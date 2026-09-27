@@ -1,0 +1,37 @@
+# Python environments
+**/.venv/
+
+# Python cache
+**/__pycache__/
+**/*.pyc
+
+# ForumCE database
+ForumCE-Server/forumce.db
+ForumCE-Server/forumce.db-wal
+ForumCE-Server/forumce.db-shm
+
+# Bridge login token
+ForumCE-Bridge/.forumce_token
+
+# macOS
+.DS_Store
+
+# Calculator build files
+ForumCE-Calculator/bin/
+ForumCE-Calculator/obj/
+
+# ForumCE Connect build output
+ForumCE-Connect/build/
+ForumCE-Connect/dist/
+ForumCE-Connect/*.spec
+ForumCE-Connect/release-dmg/
+
+# Local ForumCE backup/debug files
+*.backup
+*.before-*
+*.time-backup
+*.timestamp-debug-current
+*.optimized-debug
+*.color-backup
+bridge/
+main
