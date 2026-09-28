@@ -4,129 +4,105 @@ ForumCE is an online, text-first forum platform for the **TI-84 Plus CE**.
 
 - Website: https://forumce.com
 - Downloads: https://github.com/Zytue67/ForumCE-Releases/releases/latest
-- Current version: **ForumCE v1.0.0**
+- Current version: **ForumCE v1.1.0**
+- Desktop support: **macOS (Apple Silicon + Intel) and Windows 10/11 x64**
 
 ## Before installing ForumCE
 
 Your TI-84 Plus CE needs a few things first:
 
-1. **arTIfiCE** — your calculator must be jailbroken/enabled to run native programs: https://github.com/YvanTT/arTIfiCE
-2. **CE Libraries** — install the required CE libraries: https://github.com/CE-Programming/libraries
+1. **arTIfiCE** — enables native programs on supported calculator OS versions: https://github.com/YvanTT/arTIfiCE
+2. **CE Libraries** — install the required CE libraries using the official instructions: https://github.com/CE-Programming/libraries
 3. **Cesium** — recommended for launching and managing ForumCE: https://github.com/mateoconlechuga/cesium
-
-Set those up once, then continue with the ForumCE installation below.
 
 ## What you need
 
 - A TI-84 Plus CE
-- A USB cable
+- A USB data cable
 - A ForumCE account from https://forumce.com
 - **TI Connect CE** from Texas Instruments
-- **ForumCE Connect** for macOS
+- **ForumCE Connect** for macOS or Windows
 
 ## Install ForumCE
 
 ### 1. Install ForumCE Connect
 
-Download `ForumCE-Connect-v1.0-macOS.dmg` from the latest ForumCE release.
+Open the [latest ForumCE release](https://github.com/Zytue67/ForumCE-Releases/releases/latest) and download the build for your computer:
 
-Open the DMG, then drag **ForumCE Connect** into your Applications folder.
+- `ForumCE-Connect-v1.1-macOS-Apple-Silicon.dmg`
+- `ForumCE-Connect-v1.1-macOS-Intel.dmg`
+- `ForumCE-Connect-v1.1.0-Windows-x64.exe`
 
-If macOS blocks the app the first time, right-click **ForumCE Connect**, choose **Open**, then confirm. If that doesn't work, press the ? at the top-right of the pop-up window, navigate down to the privacy settings link and click it, scroll down to the bottom and press the "allow" button to open the app.
+**macOS:** open the DMG and drag **ForumCE Connect** into Applications. Because the app is currently ad-hoc signed, macOS may require you to right-click the app and choose **Open** on first launch.
+
+**Windows:** run the `.exe`. Because the app is not yet code-signed, Windows SmartScreen may show an unknown/uncommon app warning. Use **More info → Run anyway** only if you downloaded ForumCE Connect from the official ForumCE release.
+
+Packaged builds include their Python runtime and dependencies. A separate Python installation is not required.
 
 ### 2. Install ForumCE on your calculator
 
-Open ForumCE Connect and click **Download / Repair Calculator**.
-
-After the files are verified, click **Open Folder**.
-
-Open TI Connect CE and send **all three** files to the calculator:
+Open ForumCE Connect and click **Download / Repair Calculator**, or download these three files directly from the release:
 
 - `FORUMCE.8xp`
 - `FORUMCE.8xp.0.8xv`
 - `FORUMCE.8xp.1.8xv`
 
-If TI Connect CE asks whether to replace existing files, choose **Replace**.
+Use TI Connect CE to send **all three** files to the calculator. If TI Connect CE asks whether to replace existing files, choose **Replace**.
 
-All three files must always be installed together.
+All three ForumCE files must be installed together.
 
 ### 3. Connect to ForumCE
 
-1. Open **ForumCE Connect** on your Mac.
+1. Open **ForumCE Connect**.
 2. Sign in with your ForumCE account.
-3. Connect your TI-84 Plus CE with USB.
-4. Start ForumCE on the calculator.
-5. Wait for ForumCE Connect to show:
+3. Close TI Connect CE after transferring files so it does not compete for the calculator connection.
+4. Connect your TI-84 Plus CE by USB.
+5. Start ForumCE on the calculator.
+6. Wait for ForumCE Connect to show:
    - **Server — Online**
    - **Calculator — Connected**
    - **Bridge — Running**
 
 You can now use ForumCE from the calculator.
 
+## ForumCE v1.1.0
+
+v1.1.0 adds official **Windows 10/11 x64 support** to ForumCE Connect while keeping the existing macOS support. The calculator client and ForumCE server protocol are unchanged from v1.0.0.
+
+Windows support was tested with a physical TI-84 Plus CE, including forum loading, posts/replies, direct messages, reactions/notifications, and USB reconnecting.
+
 ## Updating ForumCE
 
-ForumCE Connect checks for calculator updates automatically.
+ForumCE Connect checks the official release channel for calculator updates and verifies downloaded calculator files before installation.
 
-When an update is available:
+## macOS manual bridge fallback
 
-1. Click **Download Calculator Update**.
-2. Wait for ForumCE Connect to verify the files.
-3. Close ForumCE on the calculator.
-4. Click **Open Folder**.
-5. Open TI Connect CE.
-6. Send all three ForumCE files to the calculator.
-7. Choose **Replace** if prompted.
-8. Start ForumCE again.
-
-## If ForumCE Connect will not open
-
-You can run the ForumCE bridge manually from Terminal instead.
-
-First, make sure the three ForumCE calculator files are already installed with TI Connect CE.
-
-Download `ForumCE-Bridge-macOS-v1.0.zip` from the latest ForumCE release, extract it, then open Terminal and run:
-
-```bash
-cd ~/Downloads/ForumCE-Bridge-macOS-v1.0
-python3 -m venv .venv
-source .venv/bin/activate
-python3 -m pip install -r requirements.txt
-python3 bridge.py
-```
-
-The bridge will ask for your ForumCE username and password the first time.
-
-Then:
-
-1. Connect the calculator by USB.
-2. Start ForumCE on the calculator.
-3. Leave the Terminal window open while using ForumCE.
-
-The manual bridge connects directly to the production ForumCE server at:
-
-`https://api.forumce.com`
+If the macOS desktop app cannot be used, the standalone macOS bridge is available from the release page. See the release repository documentation for the manual Terminal setup.
 
 ## Troubleshooting
 
 **Calculator is not detected**
 
-- Make sure ForumCE is actually running on the calculator.
+- Make sure ForumCE is running on the calculator.
+- Close TI Connect CE after file transfer.
 - Reconnect the USB cable.
-- Try another USB port or cable.
+- Try another USB data port/cable.
 - Restart ForumCE Connect.
 
 **ForumCE Connect says the server is offline**
 
-Check https://forumce.com and try again after a moment.
+Check https://forumce.com and your internet connection, then try again.
 
-**The calculator files will not install**
+**ForumCE reports a missing CE library**
 
-Make sure you are sending all three ForumCE files with TI Connect CE and replacing the old copies when asked.
+Follow the official CE Libraries installation instructions and make sure the required libraries were actually transferred to the calculator.
 
-**ForumCE Connect is blocked by macOS**
+**Windows SmartScreen blocks ForumCE Connect**
 
-Right-click the app in Applications and choose **Open**.
+Make sure the file came from the official ForumCE release, then choose **More info → Run anyway**. ForumCE Connect is not yet commercially code-signed.
 
 ## Contact and Support
 
-Visit https://forumce.com/support for ForumCE downloads and support information.
+- Website: https://forumce.com
+- Support: https://forumce.com/support
+- Email: forumce.dev@gmail.com
